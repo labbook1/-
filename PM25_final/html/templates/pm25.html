@@ -1,0 +1,132 @@
+
+<!DOCTYPE html>
+
+<html lang="zh-cn" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
+<meta http-equiv="refresh" content="20"/>
+
+<title>空气质量数据及控制</title>
+</head>
+<body>
+
+
+<center>
+<h2>空气质量数据及控制</h2>
+
+<p>&nbsp;</p>
+
+<script language="javascript">
+function getCurDate()
+{
+var d = new Date();
+var week;
+switch (d.getDay()){
+case 1: week="星期一"; break;
+case 2: week="星期二"; break;
+case 3: week="星期三"; break;
+case 4: week="星期四"; break;
+case 5: week="星期五"; break;
+case 6: week="星期六"; break;
+default: week="星期天";
+}
+var years = d.getFullYear();
+var month = add_zero(d.getMonth()+1);
+var days = add_zero(d.getDate());
+var hours = add_zero(d.getHours());
+var minutes = add_zero(d.getMinutes());
+var seconds=add_zero(d.getSeconds());
+var ndate = years+"年"+month+"月"+days+"日 "+hours+":"+minutes+":"+seconds+" "+week;
+var divT=document.getElementById("logInfo");
+divT.innerHTML= ndate;
+}
+function add_zero(temp)
+{
+if(temp<10) return "0"+temp;
+else return temp;
+}
+setInterval("getCurDate()",100);
+</script>
+
+<p id="logInfo"></p>
+
+<form id="form1" name="form1" method="post">
+<table>
+<tr>
+	<td>PM2.5值:</td>
+        <td>{{pm25}}&#956g/m<sup>3<sup/></td>
+	<td></td>
+</tr>
+<tr>
+	<td>PM10值: </td>
+	<td>{{pm10}}&#956g/m<sup>3<sup/></td>
+	<td></td>
+</tr>
+<tr>
+	<td>火灾预警：</td>
+        <td id="fire_check">{{fire}}</td>
+<script>
+	switch({{fire}})
+{
+	case 0:
+		document.getElementById("fire_check").innerHTML ="一切正常";
+		break;
+	case 1:
+		document.getElementById("fire_check").innerHTML ="火灾警告";
+		break;
+}
+</script>
+        <td></td>
+</tr>
+
+<tr>
+	<td>净化器当前状态：</td>
+        <td id="state_check">{{state}}</td>	
+<script>
+	switch({{state}})
+{
+	case 0:
+		document.getElementById("state_check").innerHTML ="手动关闭";
+		break;
+	case 1:
+		document.getElementById("state_check").innerHTML ="手动打开";
+		break;
+	case 2:
+		document.getElementById("state_check").innerHTML ="自动关闭";
+		break;
+	case 3:
+		document.getElementById("state_check").innerHTML ="自动打开";
+		break;
+	case 9999999:
+		document.getElementById("state_check").innerHTML ="等待信息";
+		break;
+	default:
+		document.getElementById("state_check").innerHTML ="error";
+}
+</script>
+        <td></td>
+</tr>
+</table>
+
+<br />
+<p>
+<input type="submit" name="turn_on" value="打开净化器"
+style="width:150px; height:40px; background-color: #45b97c; font-size:12px; font-family:"微软雅黑"; font-weight:bold; color:#FFF"/>
+</p>
+
+<p>
+<input type="submit" name="turn_on" value="关闭净化器"
+style="width:150px; height:40px; background-color: #d71345; font-size:12px; font-family:"微软雅黑"; font-weight:bold; color:#FFF" />
+</p>
+
+
+<p>
+<input type="submit" name="turn_on" value="自动控制模式"
+style="width:150px; height:40px; background-color: #afb4db; font-size:12px; font-family:"微软雅黑"; font-weight:bold; color:#FFF" />
+</p>
+</form>
+</center>
+</body>
+</html>
